@@ -1,0 +1,6 @@
+[{
+    "id":"ld15kqtujq1g7aa5m1q",
+    "timestamp":1657129850938,
+    "products":[]
+},
+{"id":"udhqrlkid7g1g787blsq","timestamp":1657059792794,"products":[{"id":"209783f9-48a1-4247-ae13-90c389b179cb","timestamp":1648384294499,"name":"Osito","description":"Lindo","code":"code","photo":"urlDeLaphoto","price":999,"stock":10}]}]
