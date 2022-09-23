@@ -1,29 +1,26 @@
 import {Router} from 'express';
-import { registerStrategy, loginStrategy } from '../strategies/userStrategies.js';
-import {
-    registerUser,
-    authenticateUser,
-    errorUser
-} from '../controllers/userController.js';
-import passport from 'passport';
-
 const router = Router();
-
-passport.use('register', registerStrategy)
-passport.use('login', loginStrategy)
 
 router.get('/', async (req, res)=> {
     res.json({username: req.session.user, admin: req.session.admin})
 })
 
-router.get('/error', (req, res) => {
-    console.log(' get ')
-    res.json({message: 'get'})
+//router.post('/register', passport.authenticate('register', {failureRedirect: '/error'}), registerUser);
+    
+//router.post('/login', passport.authenticate('login', {failureRedirect: '/error'}), authenticateUser)
+
+router.post("/login", (req, res) => {
+    passport.authenticate('login', (err, user, info) => {
+        res.json(info)
+    })(req, res)
 })
 
-router.post('/register', passport.authenticate('register', {failureRedirect: '/error'}), registerUser);
-    
-router.post('/login', passport.authenticate('login', {failureRedirect: '/error'}), authenticateUser)
+router.post("/register", (req, res) => {
+    passport.authenticate('register', (err, user, info) => {
+        console.log(info)
+        res.json(info)
+    })(req, res)
+})
 
 export default router;
 

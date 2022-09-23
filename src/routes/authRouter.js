@@ -1,9 +1,14 @@
 
 import {Router} from 'express'
+import passport from 'passport';
 
 const router = Router();
 
-router.post('/login', async (req, res)=> {
+router.get('/', async (req, res)=> {
+    res.json({username: req.session.user, admin: req.session.admin})
+})
+
+/*router.post('/login', async (req, res)=> {
     const {user} = req.body;
 
     if (user){
@@ -13,10 +18,23 @@ router.post('/login', async (req, res)=> {
         return res.json ({user: req.session.user, admin: req.session.admin})
     }
     res.json({admin: false})
+})*/
+
+//router.post('/register', passport.authenticate('register', {failureRedirect: '/error'}), registerUser);
+    
+//router.post('/login', passport.authenticate('login', {failureRedirect: '/error'}), authenticateUser)
+
+router.post("/login", (req, res) => {
+    passport.authenticate('login', (err, user, info) => {
+        res.json(user)
+    })(req, res)
 })
 
-router.get('/', async (req, res)=> {
-    res.json({username: req.session.user, admin: req.session.admin})
+router.post("/register", (req, res) => {
+    passport.authenticate('register', (err, user, info) => {
+
+        res.json(info)
+    })(req, res)
 })
 
 router.get('/logout', async (req, res)=> {
